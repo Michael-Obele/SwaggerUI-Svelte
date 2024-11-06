@@ -1,0 +1,28 @@
+{
+	"name": "@obele-michael/swagger-ui-svelte",
+	"version": "0.1.0",
+	"description": "A Svelte library for auto-generating Swagger UI documentation by scanning HTTP handlers in SvelteKit routes.",
+	"exports": "./mod.ts",
+	"entry": "src/lib/index.ts",
+	"keywords": [
+		"svelte",
+		"swagger-ui",
+		"openapi",
+		"sveltekit",
+		"api documentation",
+		"typescript",
+		"swagger"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Michael-Obele/swagger-ui-svelte"
+	},
+	"homepage": "https://github.com/Michael-Obele/swagger-ui-svelte#readme",
+	"bugs": {
+		"url": "https://github.com/Michael-Obele/swagger-ui-svelte/issues"
+	},
+	"author": {
+		"name": "Michael Obele"
+	}
+}

@@ -1,58 +1,99 @@
-# create-svelte
+# Swagger UI Svelte
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A Svelte library that auto-generates OpenAPI (Swagger) documentation for HTTP handlers in SvelteKit projects. This library scans your project’s routes to create a dynamic, accessible Swagger UI page that documents your API endpoints.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+## Installation
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+Install the package via npm:
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install @obele-michael/swagger-ui-svelte
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+After installing the library, you can start using it by configuring your SvelteKit routes and initializing the OpenAPI generator.
+
+### Step 1: Setup HTTP Handlers
+
+Define HTTP method handlers (e.g., `GET`, `POST`) in your SvelteKit route files (`+server.ts/js` or `page.server.ts/js`). Here’s an example:
+
+```typescript
+// src/routes/example/+server.ts
+
+import type { RequestHandler } from './$types';
+
+export const GET: RequestHandler = async () => {
+	return new Response(JSON.stringify({ message: 'Hello from GET!' }), {
+		status: 200,
+		headers: { 'Content-Type': 'application/json' }
+	});
+};
+
+export const POST: RequestHandler = async ({ request }) => {
+	const data = await request.json();
+	return new Response(JSON.stringify({ message: 'Received data', data }), {
+		status: 200,
+		headers: { 'Content-Type': 'application/json' }
+	});
+};
+```
+
+### Step 2: Generate OpenAPI JSON
+
+Run the OpenAPI generator script to scan your routes and create the `openapi.json` file. The `openapi.json` is generated in the `static` folder of your project:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+bun run generate:openapi
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+This command will create or update `static/openapi.json`, documenting all detected endpoints in your project.
 
-## Building
+### Step 3: Import and Display Swagger UI
 
-To build your library:
+In your SvelteKit app, import and display Swagger UI using the provided component from `@obele-michael/swagger-ui-svelte`:
 
-```bash
-npm run package
+```svelte
+<script lang="ts">
+	import { SwaggerUI } from '@obele-michael/swagger-ui-svelte';
+</script>
+
+<SwaggerUI url="/openapi.json" />
 ```
 
-To create a production version of your showcase app:
+### Step 4: Accessing Swagger Documentation
 
-```bash
-npm run build
+After setting up, visit your app to view the Swagger UI, which will render the documentation for your API endpoints based on `openapi.json`.
+
+## Features
+
+- **Automatic Route Scanning**: Automatically detects and documents `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, and `OPTIONS` handlers in SvelteKit.
+- **OpenAPI-Compliant**: Generates an OpenAPI JSON file compatible with Swagger UI.
+- **Customizable UI**: Displays a Swagger UI page to interact with API endpoints.
+
+## Example Project Structure
+
+Here’s a sample project structure to help illustrate the usage:
+
+```plaintext
+project-root/
+├── src/
+│   ├── lib/
+│   │   ├── index.ts        # Entry point for the library
+│   │   ├── script/
+│   │   │   └── generateOpenApi.ts  # Script for OpenAPI generation
+│   ├── routes/
+│   │   ├── example/
+│   │   │   └── +server.ts  # Route file with HTTP handlers
+│   └── app.svelte          # Svelte app file
+└── static/
+    └── openapi.json        # Generated OpenAPI specification
 ```
 
-You can preview the production build with `npm run preview`.
+## Contributing
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Contributions, issues, and feature requests are welcome! Feel free to check out the [issues page](https://github.com/Michael-Obele/swagger-ui-svelte/issues) if you have any suggestions or run into problems.
 
-## Publishing
+## License
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+This project is licensed under the MIT License.
