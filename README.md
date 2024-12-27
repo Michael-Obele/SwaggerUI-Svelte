@@ -16,7 +16,7 @@ After installing the library, you can start using it by configuring your SvelteK
 
 ### Step 1: Setup HTTP Handlers
 
-Define HTTP method handlers (e.g., `GET`, `POST`) in your SvelteKit route files (`+server.ts/js` or `page.server.ts/js`). Here’s an example:
+Define HTTP method handlers (e.g., `GET`, `POST`) in your SvelteKit route files (`+server.ts/js`). Here’s an example:
 
 ```typescript
 // src/routes/example/+server.ts
