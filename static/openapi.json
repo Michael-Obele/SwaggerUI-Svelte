@@ -10,13 +10,34 @@
         "summary": "Handler for GET request",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Server error"
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
           }
         }
       },
@@ -27,20 +48,135 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "key": "value"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Server error"
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Handler for PUT request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "key": "value"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Handler for DELETE request",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
           }
         }
       }
@@ -50,13 +186,34 @@
         "summary": "Handler for GET request",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Server error"
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
           }
         }
       },
@@ -67,20 +224,48 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "key": "value"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Success"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid JSON format"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Server error"
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
           }
         }
       }

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { parse } from 'comment-parser';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD';
 
@@ -63,7 +64,15 @@ function getRoutePath(filePath: string) {
  */
 function parseFileForHandlers(filePath: string) {
 	const fileContent = fs.readFileSync(filePath, 'utf8');
-	const handlers: Record<HttpMethod, any> = {};
+	const handlers: Record<HttpMethod, any> = {
+		GET: undefined,
+		POST: undefined,
+		PUT: undefined,
+		PATCH: undefined,
+		DELETE: undefined,
+		OPTIONS: undefined,
+		HEAD: undefined
+	};
 
 	// Regular expression to match exported HTTP method functions
 	const methodRegex =
@@ -73,27 +82,58 @@ function parseFileForHandlers(filePath: string) {
 	while ((match = methodRegex.exec(fileContent)) !== null) {
 		const method = match[2] as HttpMethod;
 		console.log(`Detected ${method} handler in ${filePath}`);
-		handlers[method.toLowerCase()] = {
-			summary: `Handler for ${method} request`,
+		const jsDoc: { description?: string; example?: any; responses?: Record<string, string> } =
+			extractJsDoc(fileContent, match.index);
+		handlers[method] = {
+			summary: jsDoc.description || `Handler for ${method} request`,
 			requestBody:
-				method === 'POST'
+				method === 'POST' || method === 'PUT'
 					? {
 							content: {
 								'application/json': {
-									schema: { type: 'object', properties: {} }
+									schema: { type: 'object', properties: { key: { type: 'string' } } },
+									example: jsDoc.example || { key: 'value' }
 								}
 							}
 						}
 					: undefined,
 			responses: {
-				'200': { description: 'Successful response' },
-				'400': { description: 'Bad request' },
-				'500': { description: 'Server error' }
+				'200': {
+					description: jsDoc.responses?.['200'] || 'Successful response',
+					content: { 'application/json': { example: { message: 'Success' } } }
+				},
+				'400': {
+					description: jsDoc.responses?.['400'] || 'Bad request',
+					content: { 'application/json': { example: { error: 'Invalid JSON format' } } }
+				},
+				'500': {
+					description: jsDoc.responses?.['500'] || 'Server error',
+					content: { 'application/json': { example: { error: 'Internal server error' } } }
+				}
 			}
 		};
 	}
 
 	return handlers;
+}
+
+/**
+ * Extract JSDoc comments from the file content.
+ * @param {string} fileContent - Content of the file.
+ * @param {number} position - Position of the matched method.
+ * @returns {object} - Parsed JSDoc object.
+ */
+function extractJsDoc(fileContent: string, position: number) {
+	const lines = fileContent.substring(0, position).split('\n');
+	const jsDocLines = [];
+	for (let i = lines.length - 1; i >= 0; i--) {
+		const line = lines[i].trim();
+		if (line.startsWith('/**')) break;
+		jsDocLines.unshift(line);
+	}
+	const jsDocContent = jsDocLines.join('\n');
+	const parsed = parse(jsDocContent);
+	return parsed.length ? parsed[0] : {};
 }
 
 // Generate the OpenAPI specification and write it to a file
