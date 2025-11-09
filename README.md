@@ -1,5 +1,31 @@
 # Swagger UI Svelte
 
+> 🚨 **DEPRECATED** 🚨
+>
+> This repository is deprecated in favour of a new and improved project: [sveltekit-api-gen](https://github.com/Michael-Obele/sveltekit-api-gen).
+>
+> Please migrate to the replacement package: [sveltekit-openapi-generator](https://www.npmjs.com/package/sveltekit-openapi-generator) and visit the [project homepage](https://sveltekit-openapi-generator.netlify.app/).
+>
+> For migration instructions and continued updates, see the new project's GitHub repository.
+
+## Migration Guide
+
+This project has been superseded by a more robust and automated solution. The new project uses a Vite plugin to automatically generate OpenAPI specs from SvelteKit server endpoints using JSDoc `@swagger` annotations, offering features like Hot Module Replacement, TypeScript support, SvelteKit-native route handling, shared schemas, and seamless Swagger UI integration.
+
+### Key Differences
+- **Automation**: No need for manual generation scripts; the plugin auto-generates specs during development and build.
+- **Annotations**: Document endpoints directly in your server files with `@swagger` JSDoc blocks.
+- **Integration**: Better support for SvelteKit features like route parameters, groups, and optional segments.
+- **Modern Features**: Includes HMR, virtual modules, and build-time output.
+
+### How to Migrate
+1. Install the new package: `npm install -D sveltekit-openapi-generator`.
+2. Configure the Vite plugin in your `vite.config.js` (see the [new project's README](https://github.com/Michael-Obele/sveltekit-api-gen) for details).
+3. Replace manual generation with `@swagger` annotations in your `+server.ts/js` files.
+4. Remove old dependencies and scripts related to this library.
+
+For full instructions, visit the [new project's GitHub repository](https://github.com/Michael-Obele/sveltekit-api-gen).
+
 A Svelte library that auto-generates OpenAPI (Swagger) documentation for HTTP handlers in SvelteKit projects. This library scans your project’s routes to create a dynamic, accessible Swagger UI page that documents your API endpoints.
 
 ## Installation
